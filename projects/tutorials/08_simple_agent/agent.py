@@ -1,7 +1,7 @@
 ﻿"""Agent 核心：Think → Act → Observe 循环。"""
 
 import re
-
+import json
 import llm
 from tools import get_tool_descriptions, execute_tool
 
@@ -42,9 +42,11 @@ def run(goal: str) -> str:
 
         tool_name = match.group(1).strip()
         tool_arg = match.group(2).strip()
+        arguments = json.loads(tool_arg)
         print(f"[调用工具] {tool_name}({tool_arg!r})")
 
-        result = execute_tool(tool_name, tool_arg)
+        
+        result = execute_tool(tool_name, arguments)
         print(f"[工具结果] {result}")
 
         messages.append({"role": "assistant", "content": response})

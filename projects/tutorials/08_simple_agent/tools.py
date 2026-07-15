@@ -39,8 +39,8 @@ def get_tool_descriptions() -> str:
     return "\n".join(lines)
 
 
-def execute_tool(name: str, arg: str) -> str:
+def execute_tool(name: str, arguments: dict) -> str:
     """根据名字执行工具，返回结果字符串。"""
     if name not in TOOLS:
         return f"未知工具: {name}"
-    return TOOLS[name]["func"](arg)
+    return TOOLS[name]["func"](**arguments)
