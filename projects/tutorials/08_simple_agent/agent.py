@@ -1,4 +1,4 @@
-﻿"""Agent 核心：Think → Act → Observe 循环。"""
+"""Agent 核心：Think → Act → Observe 循环。"""
 
 import re
 import json
@@ -18,8 +18,8 @@ def build_system_prompt() -> str:
 
 调用工具的格式：在回复中写 [TOOL:工具名:参数]
 例如：
-  [TOOL:print:hello world]
-  [TOOL:read_file:./data.txt]
+[TOOL:print:{{"text":"hello world"}}]
+[TOOL:read_file:{{"path":"./data.txt"}}]
 
 只有在需要执行操作时才写 [TOOL:...]；
 如果不需要执行任何操作，就直接给出最终答案，不要包含任何 [TOOL:...]。"""

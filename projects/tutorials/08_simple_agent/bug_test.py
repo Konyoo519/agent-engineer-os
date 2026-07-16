@@ -14,7 +14,7 @@ TOOLS = {
 }
 
 def execute_tool(name, arguments: dict) -> str:
-    return TOOLS[name]["func"](arguments)
+    return TOOLS[name]["func"](**arguments)
 
 print(execute_tool("add", {"a": 1, "b": 2}))
 print(execute_tool("greet", {"name": "Tom"}))
