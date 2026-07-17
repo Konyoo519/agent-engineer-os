@@ -146,3 +146,60 @@ L2 (有印象,不熟练):
 1. 为什么这样写
 2. 需求变更时改哪里
 3. 报错如何定位
+
+---
+
+## 最新会话: 2026-07-18 (Day 3 复习日)
+
+### 主题
+
+**Day 3 全面复习** — 不学新知识,验证 Day 3 真实掌握程度。
+
+### 5 个 Part 的复习结果
+
+**Part 1 知识回顾**: 5 个概念用自己的话解释。整体方向对,Q3/Q4 需要追问才答到点。
+
+**Part 2 代码阅读**: 逐文件回答"为什么存在 / 删了会怎样 / 在流程哪一步"。T3 try-except 原理只到结论级(明白结论,未懂原理)。
+
+**Part 3 Debug 复盘**: 6 道典型报错诊断。JSONDecodeError 方向对根因修一半 / ModuleNotFoundError 答不出 / KeyError 答不出(我点破字典大小写) / TypeError 答对 try-except 让 LLM 重试 / 哑错误(env / BOM)答不出。
+
+**Part 4 数据流默写**: 11 步顺序全对,但漏了"正则提取"独立一步 + 把 append 目的说成"防止 system_prompt 丢失"(实际是给 LLM 看完整对话历史)。修正后通过。
+
+**Part 5 综合练习**: 判断题 3/3 / 填空题 3/4 / 预测题漏 [OUT] / 代码修改对 / Debug 方向对一半 / 应用题漏写工具函数本身。
+
+### 8 级能力评估
+
+| 维度 | 等级 | 理由 |
+|---|---|---|
+| Agent Loop | L5 解释原理 | 11 步数据流能完整默写,边界条件清晰 |
+| Tool Calling | L4 独立写出 | 理解 str→dict→函数调用全链 |
+| execute_tool | L4-L5 之间 | 动态性懂,字段语义模糊 |
+| JSON | L5 解释原理 | 能区分 str vs dict 本质差异 |
+| Debug | L3-L4 | 能定位报错行,哑错误意识有 |
+| Git 工作流 | 未评估 | 今天未涉及 |
+
+### 今日真正掌握
+
+1. 数据流 11 步完整闭环
+2. 字典注册模式的动态性(加工具不改 execute_tool)
+3. append 顺序的语义(assistant 决策 + user 工具结果)
+4. 错误处理方向(LLM 输出不稳定 → try/except 让 LLM 重试)
+5. 哑错误意识(env 静默返回 None / BOM 导致 key 找不到)
+
+### 薄弱点
+
+1. try/except 原理只到结论级(明日补 Python 异常基础)
+2. openai SDK 内部细节完全黑盒(Choice / Message 类型)
+3. Python 错误类型语义不熟
+4. lambda / 装饰器 / 闭包等高阶函数空白
+
+### 明日路径建议
+
+可以进入 Pydantic / 结构化输出,但建议先补 try/except 基础(30 min)。
+
+主线 Phase 4 还有 3 项没收尾:
+1. 工具结果结构化(Pydantic / JSON schema)
+2. 错误处理与重试(try/except)
+3. 多工具混合调用
+
+不建议直接上 LangGraph / MCP。

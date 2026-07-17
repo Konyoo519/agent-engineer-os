@@ -143,3 +143,27 @@ Target Companies:
 - Moonshot AI
 - ByteDance
 - Tencent
+
+---
+
+## 2026-07-18 更新 (Day 3 复习日)
+
+**复习评估结果**:
+- Agent Loop: L5
+- Tool Calling: L4
+- execute_tool: L4-L5 之间
+- JSON: L5
+- Debug: L3-L4
+- Git 工作流: 未评估
+
+**新增薄弱点**:
+- try/except 原理只到结论级
+- Python 错误类型语义分类不熟
+- OpenAI SDK 内部细节黑盒
+
+**Phase 4 Agent 主线剩余 3 项**:
+- 工具结果结构化(Pydantic / JSON schema)
+- 错误处理与重试(try/except)
+- 多工具混合调用
+
+**Phase 1 Python 按需补强**:核心已齐,后续针对性补漏。
