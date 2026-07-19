@@ -6,13 +6,12 @@
 - Goal: Become a qualified AI Agent Engineer within 120 days.
 - Repository Status: Active Development
 - Current Sprint: Sprint 4 (Agent) — tutorial 08_simple_agent
-- Current Day: **Day 3** (2026-07-16)
-- **当前日期: 2026-07-16**
+- Current Day: **Day 4** (2026-07-19 / 2026-07-20)
+- **当前日期: 2026-07-20**
 
 ## Current Progress
 
 **Environment Setup**
-
 - [x] Repository initialized
 - [x] Directory structure created
 - [x] Core documents completed
@@ -22,148 +21,110 @@
 **Agent 主线 (Phase 4)**
 
 - [x] LLM API 调用 (OpenAI 兼容 / DeepSeek) — L3-L4,真跑通 2026-07-16
-- [x] System Prompt 工程基础 — **L4**,2026-07-16 亲自修过 prompt 与 json.loads 不一致的 bug
+- [x] System Prompt 工程基础 — **L4**,2026-07-16
 - [x] Tool Registry (字典式)
 - [x] 单参数 Tool Calling
 - [x] 多参数动态传入 Tool Calling (2026-07-15)
-- [x] LLM 工具调用与 Python 工具执行职责分工 (2026-07-15,纯概念)
+- [x] LLM 工具调用与 Python 工具执行职责分工 (2026-07-15)
 - [x] execute_tool 升级为 (name, arguments: dict) + **arguments 解包 (2026-07-15)
 - [x] agent.py 用 json.loads 解析 LLM JSON 输出 (2026-07-15)
 - [x] 静态测试 test_pipeline.py 跑通端到端解析链路 (2026-07-15)
-- [x] Agent Loop 与 messages.append 的"记忆"作用 — **L4**,2026-07-16 真跑 2 轮验证
-- [x] **端到端跑通真实 DeepSeek API** (2026-07-16,Day 3 主要成就)
+- [x] Agent Loop 与 messages.append 的"记忆"作用 — **L4**,2026-07-16
+- [x] 端到端跑通真实 DeepSeek API (2026-07-16)
 - [x] 调用 print 工具 (2026-07-16)
 - [x] 调用 read_file 工具 (2026-07-16)
-- [ ] 工具结果结构化 -> **当前下一步**
-- [ ] 错误处理与重试
-- [ ] 多工具混合
+- [x] **工具结果结构化 (Pydantic + execute_tool 返回 dict)** — **L4**,2026-07-19
+- [x] **错误处理与重试 (三层拦截)** — **L4**,2026-07-19
+- [x] **多轮错误恢复端到端测试 (test_all_errors.py)** — **L4**,2026-07-19
+- [ ] 多工具混合 — **当前下一步**
 
 **晚间综合复习新增 (Day 2 晚)**
-
-- [x] **Debug 完整 4 步流程** 验证通过 (2026-07-15 晚)
-- [x] **独立写出 tools_v2.py** (2026-07-15 晚)
-- [x] **正则基础** (运行级理解,语法细节 L3)
-- [x] **Agent 全链路心智模型** (完整串讲)
-- [x] **独立走完 debug 全流程** (实测)
+- [x] Debug 完整 4 步流程 验证通过 (2026-07-15 晚)
+- [x] 独立写出 tools_v2.py (2026-07-15 晚)
+- [x] 正则基础 (L3 语法细节)
+- [x] Agent 全链路心智模型
+- [x] 独立走完 debug 全流程 (实测)
 
 **新增 (Day 3 跨环境调试)**
+- [x] 解决 python312._pth sys.path 强制路径问题 (2026-07-16)
+- [x] 安装 openai SDK (2026-07-16)
+- [x] 解决 .env UTF-8 BOM 哑错误 (2026-07-16)
+- [x] 修复 system prompt 与 json.loads 不一致问题 (2026-07-16)
 
-- [x] python312._pth 强制 sys.path 问题诊断
-- [x] sys.path.insert(0, ...) 启动器模式
-- [x] UTF-8 BOM 导致 env var key 名带不可见字符问题
-- [x] 显式 ASCII vs UTF-8 编码选择
+**新增 (Day 4 错误恢复 + 结构化输出)**
 
-**Python 按需补强 (Phase 1)**
+- [x] **Python Exception 完整理解** (try/except/raise/traceback/异常家族) — L2 → **L4**
+- [x] **异常分类设计** (raise KeyError 复用 except + dict 查表) — **L4**
+- [x] **execute_tool 返回结构化 dict** (status/category/message) — **L5**
+- [x] **Pydantic BaseModel + 嵌套验证** (ReadFileArgs/PrintArgs) — L3-L4
+- [x] **三层错误拦截设计** (json.loads / Pydantic / execute_tool) — **L4**
+- [x] **TOOLS vs TOOL_ARG_MODELS 双字典分工** — **L4**
+- [x] **6 类错误 category** (bad_args/not_found/wrong_type/timeout/unknown_tool/unknown_error)
 
-- [x] 嵌套 dict / list
-- [x] 函数作为对象
-- [x] Dictionary-based Tool Registry 模式
-- [x] parameter / argument 区分 (2026-07-15)
-- [x] **arguments 字典解包成命名参数 (2026-07-15)
-- [x] 类型注解基础 (2026-07-15)
-- [x] list.append(item) (2026-07-15)
-- [x] json.loads(s) 字符串 -> dict (2026-07-15)
-- [x] **(Day 3 新增)** f-string 占位符
-- [x] **(Day 3 新增)** 正则 match.group(N) 捕获组
-- [x] **(Day 3 新增)** Match 对象 None 判定
-- [x] **(Day 3 新增)** 真实 OpenAI 兼容 API 调用
-- [ ] *args
-- [ ] class 与工程化对象设计 (待补)
-- [ ] 装饰器 (待补)
-- [ ] async / await (待补)
-- [ ] 模块与包 (待补)
-- [ ] Pydantic (按需,结构化输出时再补)
-- [ ] try / except (按需,工具错误处理时再补)
+## Day 4 当日交付
 
----
+| 文件 | 改动 |
+|---|---|
+| tools.py | + PrintArgs/ReadFileArgs + TOOL_ARG_MODELS + classify_error + execute_tool 返回 dict + validate_args |
+| agent.py | + 三层错误拦截 + format_validation_error + JSON parse error 处理 + 系统 prompt 增加错误处理指引 |
+| test_all_errors.py | **新文件** — 5 轮错误恢复端到端测试 |
+| docs/daily/2026-07-19.md | Day 4 完整日志 |
+| AI_CONTEXT.md | 已更新到 Day 4 |
+| HANDOFF.md | 更新到 Day 4 handoff |
 
-## Current Learning Stage
+## 6 层错误拦截层次分工
 
-**主线:** AI Agent 工程化 (Phase 4 - Agent)
-**辅线:** Python for Agent Engineering (按需补强)
+| 层 | 拦什么 | 反馈给 LLM |
+|---|---|---|
+| 1. json.loads | JSON 语法错 | "参数解析失败：Expecting value..." |
+| 2. Pydantic | 字段类型/缺字段 | "参数验证失败（read_file）：path: Input should be a valid string" |
+| 3. execute_tool (KeyError) | 工具不存在 | unknown_tool |
+| 4. execute_tool (**解包 TypeError) | 参数错 | wrong_type |
+| 5. execute_tool (FileNotFoundError) | 文件不存在 | not_found |
+| 6. execute_tool (其他) | 兜底 | unknown_error |
 
-当前活跃项目:
-- projects/tutorials/08_simple_agent
-  - config.py: 从 .env 读取 DeepSeek 配置 (已修复 BOM 问题)
-  - llm.py: OpenAI 兼容 chat 封装
-  - tools.py: Tool Registry (嵌套字典) + 升级后的 execute_tool
-  - agent.py: Think -> Act -> Observe 循环 + JSON-格式 prompt
-  - run_agent.py: **(新增)** sys.path 注入启动器
-  - json_test.py: **(新增)** JSON 解析实验
+四层各管一段,互不替代。
 
----
+## 真实能力等级 (Day 4 验证后)
 
-## Current Focus
+**L5 解释原理:**
+- Agent Loop 11 步数据流
+- try/except 完整机制 + 异常家族 + traceback
+- `**` 解包在函数调用 / BaseModel 实例化的复用
+- raise KeyError 复用 except 分支的代码整洁技巧
 
-**下一步:**
+**L4 独立写出 + 解释:**
+- 异常分类设计 (异常类型 → LLM action category)
+- 结构化错误信息 (dict + 自然语言反馈)
+- Pydantic BaseModel + 嵌套 + 字段路径错误
+- 三层错误拦截设计
+- TOOLS vs TOOL_ARG_MODELS 双字典分工
 
-1. tools.py / agent.py 引入 Pydantic 或 JSON schema 约束 LLM 返回结构
-2. 引入 try/except 包装 execute_tool,捕获工具执行错误并把错误信息反馈给 LLM 让其重试
-3. 多工具混合测试 (同一轮里调用 print + read_file)
+**L3 能跑 + 概念清楚:**
+- Pydantic 在 Agent 里的实际应用
+- 5 轮端到端错误恢复
 
-之后引入的 Python 知识点 (如果遇到卡点):
-- Pydantic (参数 schema 时)
-- try / except (工具错误反馈时)
+**L2 有印象:**
+- Pydantic 高级特性 (默认值 / Optional / List / Field)
+- 多轮错误恢复的 token 成本
+- 错误分类边界 case (PermissionError / OSError 未测)
 
----
+## 今日薄弱点（Q&A 揭示的额外）
 
-## Portfolio Status
+1. Pydantic 类 / 实例 / __init__ / self 的本质概念（虽然能写代码，基础概念不熟）
+2. BaseModel 实例的 type()（已通过 Q&A 解决）
+3. **Q6 待补**：`validate_args` 返回元组 (ok, validated) 的设计 — 涉及「返回值表达 vs 异常表达」风格对比 — 下次单讲
 
-Projects Completed: 0
-In Progress: 08_simple_agent (Day 3 已端到端跑通,等收尾 3 项后算完成)
+## Active File List (Day 4)
 
----
+projects/tutorials/08_simple_agent/
+- agent.py — Agent 循环 + 三层错误拦截 + Pydantic 集成
+- tools.py — tools + classify_error + TOOL_ARG_MODELS + ReadFileArgs/PrintArgs + validate_args
+- llm.py — DeepSeek 封装
+- config.py — env 加载
+- run_agent.py — sys.path 注入
+- test_all_errors.py — 5 轮错误恢复端到端测试 (新)
+- bug_test.py / json_test.py / tools_v2.py — Day 2 训练场(不动)
 
-## Next Milestone
-
-完成 08_simple_agent:
-1. 多参数工具调用 ✓ (2026-07-15)
-2. LLM 端到端驱动 ✓ **(2026-07-16 完成)**
-3. 工具结果结构化 -> 下一步
-4. 错误处理与重试
-5. 多工具混合
-
-完成后进入 MCP / Multi-Agent。
-
----
-
-## Notes
-
-本文档作为整个项目的仪表板。
-详细每日记录见 docs/daily/。
-Python 知识点索引见 docs/knowledge/python.md。
-
-## Career Target
-
-Target Role: AI Agent Developer
-Expected Timeline: 120 Days
-Target Companies:
-- DeepSeek
-- MiniMax
-- Moonshot AI
-- ByteDance
-- Tencent
-
----
-
-## 2026-07-18 更新 (Day 3 复习日)
-
-**复习评估结果**:
-- Agent Loop: L5
-- Tool Calling: L4
-- execute_tool: L4-L5 之间
-- JSON: L5
-- Debug: L3-L4
-- Git 工作流: 未评估
-
-**新增薄弱点**:
-- try/except 原理只到结论级
-- Python 错误类型语义分类不熟
-- OpenAI SDK 内部细节黑盒
-
-**Phase 4 Agent 主线剩余 3 项**:
-- 工具结果结构化(Pydantic / JSON schema)
-- 错误处理与重试(try/except)
-- 多工具混合调用
-
-**Phase 1 Python 按需补强**:核心已齐,后续针对性补漏。
+docs/daily/2026-07-19.md — Day 4 完整日志 (新)
+docs/daily/2026-07-18.md — Day 3 复习

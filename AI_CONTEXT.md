@@ -1,10 +1,10 @@
-﻿# AI Context
+# AI Context
 
 > 这是 ChatGPT、Codex 与未来其他 AI 工具之间的**跨 AI 上下文快照**。
 > 不是完整历史记录,也不是唯一事实来源。
 > 完整事实依然分布在: README / ROADMAP / PROJECT_STATE / HANDOFF / docs/knowledge/ / docs/daily/ / projects/
 > 本文件只负责让一个新 AI 对话**只读这一份文件**就能快速恢复当前学习状态。
-最后更新: **2026-07-18 (Day 3 复习日完成)**
+最后更新: **2026-07-20 (Day 4 完结 + 晚间 Q&A)**
 
 ---
 
@@ -14,76 +14,104 @@
 - 项目目标: 120 天内成为合格的 AI Agent Engineer
 - 仓库状态: Active Development
 - 当前 Sprint: Sprint 4 (Agent) — tutorial 08_simple_agent
-- 当前 Day: Day 3 (含 2026-07-16 实战 + 2026-07-18 复习)
+- 当前 Day: Day 4
 
 ## 2. 当前状态快照
 
 ### 主线进度
-- **Phase 4 Agent 主线 — 端到端跑通了** ✓
-  - 08_simple_agent 真实 DeepSeek API,print + read_file 两个工具均成功
-  - Round 1 → Round 2 完整 agent loop 验证成功
-  - Day 3 解决了 3 个不期而遇的 bug (utf-8 BOM / sys.path / prompt JSON 不一致)
-  - Day 3 复习(2026-07-18)完成 5 部分评估,验证 L4-L5 掌握度
+- **Phase 4 Agent — 三件套前两件完成** ✓✓○
+  - ✓ 结构化输入 (Pydantic 验证参数 + 嵌套 BaseModel)
+  - ✓ 结构化错误 (execute_tool 返回 dict + classify_error 查表)
+  - ○ 多工具混合调用(剩余)
 
-### 真实能力等级 (Day 3 + 复习日验证)
+### 三层错误拦截设计(已完成)
+
+```
+LLM 输出 JSON 字符串
+    ↓
+json.loads()           ← 拦截层 1: JSON 解析错
+    ↓
+Pydantic BaseModel     ← 拦截层 2: 字段类型/缺字段错
+    ↓
+execute_tool()         ← 拦截层 3: 业务错(文件不存在)
+    ↓
+classify_error()       ← 把异常归类到 6 类 LLM 友好 category
+```
+
+### 6 类错误 category(用户设计)
+
+`bad_args / not_found / wrong_type / timeout / unknown_tool / unknown_error`
+
+### 真实能力等级 (Day 4 验证)
 
 **L5 解释原理**:
 - Agent Loop 11 步数据流(能默写 + 边界条件)
-- JSON str vs dict 本质差异 + json.loads 三种输入合法性
+- try/except 完整机制 + 异常家族 + traceback 读法
+- raise 复用 except 分支(代码整洁技巧)
+- `**` 解包在函数调用和 BaseModel 实例化的复用
 
 **L4 独立写出 + 解释**:
-- 字典注册模式 + execute_tool 动态调用
-- Tool Calling 全链(str → 正则 → dict → 函数调用)
-- messages.append 顺序语义
+- dict 查表 (classify_error / TOOL_ARG_MODELS / TOOLS)
+- BaseModel + 嵌套 + 字段路径错误
+- 三层错误拦截设计
 
 **L3 能跑 + 概念清楚**:
-- 真实 Agent Loop(已跑 2 轮)
-- DeepSeek v4-pro 模型
-- 环境调试流程
+- Pydantic 在 Agent 里的应用(model_dump() 还需深化)
+- 端到端 5 轮错误恢复(missing.txt + 错参数 + 空 JSON 都验证)
 
 **L2 有印象 + 不熟细节**:
-- Python 错误类型语义(TypeError / KeyError / JSONDecodeError / ModuleNotFoundError)
-- 正则非贪婪 + 回溯
-- openai SDK Choice / ChatCompletionMessage 类型
+- Pydantic 高级特性(默认值 / Optional / List / Field)
+- 多轮错误恢复的 token 成本
+- 错误分类的边界 case(PermissionError / OSError)
 
-### 用户当前学习最大薄弱点 (2026-07-18 复习确认)
+### 用户当前学习最大薄弱点 (2026-07-19 复习 + 晚间 Q&A 确认)
 
-1. **try/except 原理只到结论级** — 知道"让 LLM 自救",不知道 Python 异常机制如何工作
-2. **Python 错误类型分类不熟** — 见过的错能识别,新错难分类
-3. **OpenAI SDK 内部细节** — 只用了 chat.completions.create 一条路径
+**已通过 Q&A 解决**:
+- 类 / 实例 / __init__ / self 的本质 (L4 标志: 学生自己推出 a 不是 str → 必须 model_dump())
+- BaseModel 实例的 type() 与 dict 的区别
+- json.loads vs model_dump 各自的应用场景
+- TOOLS vs TOOL_ARG_MODELS 双字典分工
 
-## 3. 下一步 (基于 Day 3 复习评估)
+**仍然薄弱** (Day 5 优先补):
+- 错误分类枚举的边界 case (PermissionError / OSError)
+- Pydantic 高级特性 (Field 默认值 / Optional / List)
+- 多轮错误恢复的 token 成本意识
 
-**主线 Phase 4 Agent 收尾 (08_simple_agent):**
+**待补到 Day 5 单讲**:
+- Q6 `validate_args` 返回 `(ok, validated)` 元组的设计哲学 — 「返回值 vs 异常表达」两种错误处理风格对比
 
-1. 工具结果结构化 (Pydantic / JSON schema, 让 LLM 返回结构化数据而不是只能打印字符串)
-2. 错误处理与重试 (execute_tool 包 try/except, 工具错误作为 user 消息反馈给 LLM 让其重试)
-3. 多工具混合 (同一轮里同时调 print + read_file)
+1. **Pydantic 应用级 API** — model_dump() / Field 约束 / Optional 还没用过
+2. **错误分类枚举完整性** — 6 类够不够?边界 case 未覆盖
+3. **多工具混合调用** — 同一轮调多个工具的并发/顺序未涉及
 
-**Day 4 推荐路径**:
-- 上午 (30 min): 补 Python try/except 基础(3-5 个小例子) — Day 4 错误处理的地基
-- 下午: 进入 Pydantic 结构化输出(约束 LLM 返回 schema) — 解决 Day 3 残留的 JSON 不稳定问题
+## 3. 下一步 (基于 Day 4)
 
-不建议直接上 LangGraph / MCP。
+08_simple_agent 主线还差最后 1 件:**多工具混合调用**。
+
+候选路径:
+- **A. 多工具混合** — 同一轮连续调 print + read_file,验证 messages 顺序
+- **B. 进入 09 项目** — 学完 08,开始多 turn / multi-agent 主题
+- **C. 复习日** — 今天信息量大(2 Part 大改造 + Pydantic),固化一下
+
+推荐 **C(短复习) → A(半天) → B(进入新主题)**,拉开节奏。
 
 间隔复习:
-- 3 天后 (2026-07-21) 再测一次 Debug 4 步流程(防止遗忘)
+- 3 天后 (2026-07-22) 再测 Day 4 内容(异常机制 + Pydantic 基础 + 三层拦截设计)
 
 ---
 
-## 当前活跃文件 (2026-07-18)
+## 当前活跃文件 (2026-07-19)
 
 - projects/tutorials/08_simple_agent/
-  - agent.py — Agent 循环 + JSON prompt
-  - tools.py — Tool Registry + execute_tool
-  - llm.py — DeepSeek 封装
-  - config.py — env 加载(已修复 BOM 问题)
-  - .env — base_url = https://api.deepseek.com/v1, model = deepseek-chat
-  - run_agent.py — sys.path 注入启动器
-  - json_test.py — JSON 解析实验
-  - tools_v2.py — (Day 2 晚) 独立写的测试工具层
-  - bug_test.py — (Day 2 晚) debug 训练场
-- docs/daily/2026-07-18.md — **(Day 3 复习日) 新增** 5 部分复习评估记录
+  - agent.py — Agent 循环 + 三层错误拦截 + Pydantic 集成(已大改)
+  - tools.py — tools + classify_error + TOOL_ARG_MODELS + ReadFileArgs/PrintArgs(已大改)
+  - llm.py — DeepSeek 封装 OK(不动)
+  - config.py — env 加载 OK(不动)
+  - run_agent.py — sys.path 注入(不动)
+  - test_all_errors.py — 5 轮错误恢复端到端测试(可重复运行)
+  - bug_test.py / json_test.py / tools_v2.py — Day 2 训练场(不动)
+- docs/daily/2026-07-19.md — **(Day 4) 新增** 4 Part 学习记录
+- docs/daily/2026-07-18.md — Day 3 复习
 
 ## 4. 教学原则 (已确认)
 
@@ -96,20 +124,22 @@ Agent 主线 + Python for Agent 按需补强 — 这是 Day 1 调整后的策略
 
 ## 5. 状态
 
-**主线** Phase 4 - Agent 真实跑通 + 复习评估完成, 还剩 3 项收尾任务(结构化输出 / 错误重试 / 多工具混合)才能算 08_simple_agent 完成。
-**侧线** Python 按需补强, 核心已齐, 后续只需针对性补漏(正则 + 错误类型语义 + Pydantic 按需 + try/except 按需)。
+**主线** Phase 4 - 08_simple_agent 三件套 2/3 完成,剩多工具混合。
+**Python 按需** Exception 基础已补, Pydantic 入门完成。
+**薄弱** Pydantic 高级 API + 错误分类完整度 + 多工具并发。
 
-## 6. 避免重开
+## 6. 避免重讲
 
 不要重讲这些已掌握内容:
 - Tool Registry 设计
-- 动态 Tool Calling
-- execute_tool(name, arguments) 4 步
-- ** arguments 解包
+- 动态 Tool Calling + execute_tool
+- **arguments 解包
 - JSON.loads(str) -> dict
-- f-string 基础用法
-- 正则 (.*?) 与 match.group(N)
-- Match 对象 None 判定
-- 字典 key 大小写敏感
+- f-string / 正则 / match.group / Match None / 字典 key 大小写
+- Agent Loop 11 步
+- messages.append 顺序语义
+- try/except + raise + traceback + 异常家族(已 Day 4 确认)
 
 如果发现新的理解错误, **针对具体问题补充**, 不要整体复习。
+
+

@@ -1,6 +1,7 @@
-﻿"""工具定义 + 执行器。"""
+"""工具定义 + 执行器。"""
 
 from pathlib import Path
+from pydantic import BaseModel, ValidationError
 
 
 def print_tool(text: str) -> str:
@@ -11,10 +12,7 @@ def print_tool(text: str) -> str:
 
 def read_file_tool(path: str) -> str:
     """读取文件内容。"""
-    try:
-        return Path(path).read_text(encoding="utf-8")
-    except Exception as e:
-        return f"读取失败: {e}"
+    return Path(path).read_text(encoding="utf-8")
 
 
 TOOLS = {
@@ -31,6 +29,20 @@ TOOLS = {
 }
 
 
+class PrintArgs(BaseModel):
+    text: str
+
+
+class ReadFileArgs(BaseModel):
+    path: str
+
+
+TOOL_ARG_MODELS = {
+    "print": PrintArgs,
+    "read_file": ReadFileArgs,
+}
+
+
 def get_tool_descriptions() -> str:
     """生成给 LLM 看的工具说明。"""
     lines = []
@@ -39,8 +51,40 @@ def get_tool_descriptions() -> str:
     return "\n".join(lines)
 
 
-def execute_tool(name: str, arguments: dict) -> str:
-    """根据名字执行工具，返回结果字符串。"""
-    if name not in TOOLS:
-        return f"未知工具: {name}"
-    return TOOLS[name]["func"](**arguments)
+def classify_error(e: Exception) -> str:
+    """把 Python 异常归类成 LLM 友好的 category。"""
+    error_map = {
+        FileNotFoundError: "not_found",
+        TimeoutError: "timeout",
+        TypeError: "wrong_type",
+        ValueError: "bad_args",
+    }
+    return error_map.get(type(e), "unknown_error")
+
+
+def execute_tool(name: str, arguments: dict) -> dict:
+    """执行工具，返回结构化结果（成功/失败）。"""
+    try:
+        if name not in TOOLS:
+            raise KeyError(f"未知工具: {name}")
+        result = TOOLS[name]["func"](**arguments)
+        return {"tool": name, "status": "success", "content": result}
+    except Exception as e:
+        return {
+            "tool": name,
+            "status": "error",
+            "category": classify_error(e),
+            "message": str(e),
+        }
+
+
+def validate_args(tool_name: str, arguments: dict):
+    """用 Pydantic 验证参数。返回 (ok, validated_dict_or_error_message)。"""
+    if tool_name not in TOOL_ARG_MODELS:
+        return True, arguments
+    Model = TOOL_ARG_MODELS[tool_name]
+    try:
+        validated = Model(**arguments)
+        return True, validated.model_dump()
+    except ValidationError as e:
+        return False, e
