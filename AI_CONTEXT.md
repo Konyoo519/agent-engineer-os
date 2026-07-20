@@ -1,10 +1,10 @@
 # AI Context
 
-> 这是 ChatGPT、Codex 与未来其他 AI 工具之间的**跨 AI 上下文快照**。
-> 不是完整历史记录,也不是唯一事实来源。
+> 这是 ChatGPT、Codex 与未来其他 AI 工具之间的**跨 AI 上下文快照**.
+> 不是完整历史记录, 也不是唯一事实来源.
 > 完整事实依然分布在: README / ROADMAP / PROJECT_STATE / HANDOFF / docs/knowledge/ / docs/daily/ / projects/
-> 本文件只负责让一个新 AI 对话**只读这一份文件**就能快速恢复当前学习状态。
-最后更新: **2026-07-20 (Day 4 完结 + 晚间 Q&A)**
+> 本文件只负责让一个新 AI 对话**只读这一份文件**就能快速恢复当前学习状态.
+最后更新: **2026-07-20 (Day 5 完结 —— Pydantic 强化收尾, 全部讲原理未动代码)**
 
 ---
 
@@ -13,133 +13,117 @@
 - 项目名称: **Agent Engineer OS**
 - 项目目标: 120 天内成为合格的 AI Agent Engineer
 - 仓库状态: Active Development
-- 当前 Sprint: Sprint 4 (Agent) — tutorial 08_simple_agent
-- 当前 Day: Day 4
+- 当前 Sprint: Sprint 4 (Agent) —— tutorial 08_simple_agent
+- 当前 Day: **Day 5**
 
 ## 2. 当前状态快照
 
 ### 主线进度
-- **Phase 4 Agent — 三件套前两件完成** ✓✓○
-  - ✓ 结构化输入 (Pydantic 验证参数 + 嵌套 BaseModel)
-  - ✓ 结构化错误 (execute_tool 返回 dict + classify_error 查表)
-  - ○ 多工具混合调用(剩余)
+- **Phase 4 Agent —— 三件套前两件完成** v v o
+  - v 结构化输入 (Pydantic 验证参数 + 嵌套 BaseModel)
+  - v 结构化错误 (execute_tool 返回 dict + classify_error 查表)
+  - o 多工具混合调用 (Day 6 主线, 剩余)
 
-### 三层错误拦截设计(已完成)
+### 三层错误拦截设计 (Day 4 已完成)
 
-```
-LLM 输出 JSON 字符串
-    ↓
-json.loads()           ← 拦截层 1: JSON 解析错
-    ↓
-Pydantic BaseModel     ← 拦截层 2: 字段类型/缺字段错
-    ↓
-execute_tool()         ← 拦截层 3: 业务错(文件不存在)
-    ↓
-classify_error()       ← 把异常归类到 6 类 LLM 友好 category
-```
+LLM 输出 JSON 字符串 →  json.loads() ← 拦截层 1: JSON 解析错 → Pydantic BaseModel ← 拦截层 2: 字段类型/缺字段错 (两种 error type: missing vs value) → execute_tool() ← 拦截层 3: 业务错 (文件不存在/无权限/...) → classify_error() ← 把异常归类到 6 类 LLM 友好 category
 
-### 6 类错误 category(用户设计)
+### 6 类错误 category (Day 4 用户设计)
 
 `bad_args / not_found / wrong_type / timeout / unknown_tool / unknown_error`
 
-### 真实能力等级 (Day 4 验证)
+### 真实能力等级 (Day 5 验证)
 
 **L5 解释原理**:
-- Agent Loop 11 步数据流(能默写 + 边界条件)
+- Pydantic Field 的两件事 (必填标记 / 值约束)
+- 类型错 vs 值越界 的区分 (int_parsing / greater_than_equal / less_than_equal / int_from_float)
+- Agent Loop 11 步数据流 (能默写 + 边界条件)
 - try/except 完整机制 + 异常家族 + traceback 读法
-- raise 复用 except 分支(代码整洁技巧)
+- raise 复用 except 分支 (代码整洁技巧)
 - `**` 解包在函数调用和 BaseModel 实例化的复用
 
 **L4 独立写出 + 解释**:
+- Pydantic 4 行口头自测 (必填 / 默认 / 上下限 三维度)
+- `model_dump()` 是 "对象 —— dict 网关" 概念
 - dict 查表 (classify_error / TOOL_ARG_MODELS / TOOLS)
 - BaseModel + 嵌套 + 字段路径错误
 - 三层错误拦截设计
+- TOOLS vs TOOL_ARG_MODELS 双字典分工 (Day 5 复习确认)
+- 异常分类设计 + 结构化错误信息
 
-**L3 能跑 + 概念清楚**:
-- Pydantic 在 Agent 里的应用(model_dump() 还需深化)
-- 端到端 5 轮错误恢复(missing.txt + 错参数 + 空 JSON 都验证)
+**L3 听过原理 + 概念清楚 (未在项目里实际写过)**:
+- `Optional[T] = Field(default=...)` 写法
+- `List[X]` 字段 + `min_length/max_length`
+- `None` 在 Agent 工具中的角色
+- Pydantic 在 Agent 里的实际应用
+- 5 轮端到端错误恢复
 
-**L2 有印象 + 不熟细节**:
-- Pydantic 高级特性(默认值 / Optional / List / Field)
-- 多轮错误恢复的 token 成本
-- 错误分类的边界 case(PermissionError / OSError)
-
-### 用户当前学习最大薄弱点 (2026-07-19 复习 + 晚间 Q&A 确认)
-
-**已通过 Q&A 解决**:
-- 类 / 实例 / __init__ / self 的本质 (L4 标志: 学生自己推出 a 不是 str → 必须 model_dump())
-- BaseModel 实例的 type() 与 dict 的区别
-- json.loads vs model_dump 各自的应用场景
-- TOOLS vs TOOL_ARG_MODELS 双字典分工
-
-**仍然薄弱** (Day 5 优先补):
-- 错误分类枚举的边界 case (PermissionError / OSError)
-- Pydantic 高级特性 (Field 默认值 / Optional / List)
+**L2 仍然薄弱**:
+- Pydantic 实战 (Day 6 自然补齐)
+- Q6 (Day 7+ 单讲)
+- 错误分类边界 case
 - 多轮错误恢复的 token 成本意识
 
-**待补到 Day 5 单讲**:
-- Q6 `validate_args` 返回 `(ok, validated)` 元组的设计哲学 — 「返回值 vs 异常表达」两种错误处理风格对比
+### 学生当前学习最大薄弱点 (2026-07-20 确认)
 
-1. **Pydantic 应用级 API** — model_dump() / Field 约束 / Optional 还没用过
-2. **错误分类枚举完整性** — 6 类够不够?边界 case 未覆盖
-3. **多工具混合调用** — 同一轮调多个工具的并发/顺序未涉及
+**Day 4 已通过 Q&A 解决**: 类/实例/self/json.loads vs model_dump/双字典分工.
 
-## 3. 下一步 (基于 Day 4)
+**Day 5 已通过原理讲解补齐**: Field 二分 / model_dump() 网关 / Optional+default 二分.
 
-08_simple_agent 主线还差最后 1 件:**多工具混合调用**。
+**仍然薄弱 (Day 6+ 优先补)**: 错误边界 case / Pydantic 实战 / Q6 / token 成本.
 
-候选路径:
-- **A. 多工具混合** — 同一轮连续调 print + read_file,验证 messages 顺序
-- **B. 进入 09 项目** — 学完 08,开始多 turn / multi-agent 主题
-- **C. 复习日** — 今天信息量大(2 Part 大改造 + Pydantic),固化一下
+**Day 5 引入的新教学规则** (强制执行):
+> 进入新概念必须按 "原理 —— 字面 —— 真实代码 —— 真实输出 —— 预测" 节奏, 不可以在真实输出前让学生预测.
 
-推荐 **C(短复习) → A(半天) → B(进入新主题)**,拉开节奏。
+## 3. 下一步 (基于 Day 5)
 
-间隔复习:
-- 3 天后 (2026-07-22) 再测 Day 4 内容(异常机制 + Pydantic 基础 + 三层拦截设计)
+08_simple_agent 主线还差最后 1 件: **多工具混合调用**.
+
+候选路径 (Day 6):
+- **A. 多工具混合调用** —— 同一轮连续调 print + read_file, 验证 messages 顺序
+- **B. 进入 09 项目**
+- **C. 复习日**
+
+推荐 **A → (Day 7+) 复习 + Q6 待补**.
+
+间隔复习 (沿用 Day 4 计划):
+- 3 天后 (2026-07-22) 测 Day 4 + Day 5 内容
 
 ---
 
-## 当前活跃文件 (2026-07-19)
+## 当前活跃文件 (2026-07-20)
 
-- projects/tutorials/08_simple_agent/
-  - agent.py — Agent 循环 + 三层错误拦截 + Pydantic 集成(已大改)
-  - tools.py — tools + classify_error + TOOL_ARG_MODELS + ReadFileArgs/PrintArgs(已大改)
-  - llm.py — DeepSeek 封装 OK(不动)
-  - config.py — env 加载 OK(不动)
-  - run_agent.py — sys.path 注入(不动)
-  - test_all_errors.py — 5 轮错误恢复端到端测试(可重复运行)
-  - bug_test.py / json_test.py / tools_v2.py — Day 2 训练场(不动)
-- docs/daily/2026-07-19.md — **(Day 4) 新增** 4 Part 学习记录
-- docs/daily/2026-07-18.md — Day 3 复习
+- projects/tutorials/08_simple_agent/ (Day 5 未动)
+  - agent.py / tools.py / llm.py / config.py / run_agent.py
+  - test_all_errors.py (Day 4 新建)
+  - bug_test.py / json_test.py / tools_v2.py (Day 2 训练场)
 
-## 4. 教学原则 (已确认)
+- docs/daily/2026-07-19.md — Day 4 完成日志
+- docs/daily/2026-07-20.md —— **Day 5 完成日志** (新)
 
-不按"代码行数"作为掌握标准。每个知识点必须能回答:
-1. 为什么不这样写
-2. 需求变了改哪里
-3. 报错如何定位
+---
 
-Agent 主线 + Python for Agent 按需补强 — 这是 Day 1 调整后的策略, **保持有效**, 不回退。
+## 避免重开
 
-## 5. 状态
+下次 Session 不要重新教学这些已掌握内容:
+- Tool Registry / 动态 Tool Calling / execute_tool(name, arguments)
+- **arguments 解包 / f-string / 正则 / match.group / Match None
+- JSON.loads(str) -> dict / 字典 key 大小写敏感
+- Agent Loop 11 步 / messages.append 顺序语义
+- try/except + raise + traceback + 异常家族 (Day 4 确认)
+- Pydantic 4 行口头自测 (Day 5 确认)
+- model_dump() 网关概念 (Day 5 确认)
+- Optional + default 二分 (Day 5 确认)
+- TOOLS vs TOOL_ARG_MODELS 双字典分工 (Day 5 复习确认)
 
-**主线** Phase 4 - 08_simple_agent 三件套 2/3 完成,剩多工具混合。
-**Python 按需** Exception 基础已补, Pydantic 入门完成。
-**薄弱** Pydantic 高级 API + 错误分类完整度 + 多工具并发。
+如果发现新的理解错误, 针对具体问题补充, 不整体复习.
 
-## 6. 避免重讲
+---
 
-不要重讲这些已掌握内容:
-- Tool Registry 设计
-- 动态 Tool Calling + execute_tool
-- **arguments 解包
-- JSON.loads(str) -> dict
-- f-string / 正则 / match.group / Match None / 字典 key 大小写
-- Agent Loop 11 步
-- messages.append 顺序语义
-- try/except + raise + traceback + 异常家族(已 Day 4 确认)
+## 核心学习风格备注
 
-如果发现新的理解错误, **针对具体问题补充**, 不要整体复习。
-
-
+- 学生喜欢完整代码块 (反馈过: 不要碎片化代码)
+- 学生喜欢真实项目例子 (不用假设类)
+- 学生喜欢从具体反推抽象 (已展示 L4 推理能力)
+- **新规则** (Day 5 起强制): 教学用「原理 —— 字面 —— 代码 —— 输出 —— 预测」节奏
+- 评估按 8 级制度
