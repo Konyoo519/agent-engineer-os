@@ -6,8 +6,8 @@
 - Goal: Become a qualified AI Agent Engineer within 120 days.
 - Repository Status: Active Development
 - Current Sprint: Sprint 4 (Agent) — tutorial 08_simple_agent
-- Current Day: **Day 4** (2026-07-19 / 2026-07-20)
-- **当前日期: 2026-07-20**
+- Current Day: **Day 6** (2026-07-21)
+- **当前日期: 2026-07-21**
 
 ## Current Progress
 
@@ -36,7 +36,7 @@
 - [x] **工具结果结构化 (Pydantic + execute_tool 返回 dict)** — **L4**,2026-07-19
 - [x] **错误处理与重试 (三层拦截)** — **L4**,2026-07-19
 - [x] **多轮错误恢复端到端测试 (test_all_errors.py)** — **L4**,2026-07-19
-- [ ] 多工具混合 — **当前下一步**
+- [x] **多工具混合调用 (2026-07-21, Day 6 完结, 理解不动代码)**
 
 **晚间综合复习新增 (Day 2 晚)**
 - [x] Debug 完整 4 步流程 验证通过 (2026-07-15 晚)

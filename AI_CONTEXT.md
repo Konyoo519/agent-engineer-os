@@ -4,7 +4,7 @@
 > 不是完整历史记录, 也不是唯一事实来源.
 > 完整事实依然分布在: README / ROADMAP / PROJECT_STATE / HANDOFF / docs/knowledge/ / docs/daily/ / projects/
 > 本文件只负责让一个新 AI 对话**只读这一份文件**就能快速恢复当前学习状态.
-最后更新: **2026-07-20 (Day 5 完结 —— Pydantic 强化收尾, 全部讲原理未动代码)**
+最后更新: **2026-07-21 (Day 6 完结 —— 08_simple_agent 收尾, 多工具混合调用理论+实战, 不动代码)**
 
 ---
 
@@ -14,15 +14,15 @@
 - 项目目标: 120 天内成为合格的 AI Agent Engineer
 - 仓库状态: Active Development
 - 当前 Sprint: Sprint 4 (Agent) —— tutorial 08_simple_agent
-- 当前 Day: **Day 5**
+- 当前 Day: **Day 6**
 
 ## 2. 当前状态快照
 
 ### 主线进度
-- **Phase 4 Agent —— 三件套前两件完成** v v o
+- **Phase 4 Agent —— 三件套完成** v v v
   - v 结构化输入 (Pydantic 验证参数 + 嵌套 BaseModel)
   - v 结构化错误 (execute_tool 返回 dict + classify_error 查表)
-  - o 多工具混合调用 (Day 6 主线, 剩余)
+  - v 多工具混合调用 (Day 6 完结, 理解不动代码)
 
 ### 三层错误拦截设计 (Day 4 已完成)
 

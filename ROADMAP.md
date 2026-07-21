@@ -66,7 +66,7 @@
 - [x] 工具结果结构化 (Pydantic + execute_tool dict) (2026-07-19)
 - [x] 错误处理与重试 (三层拦截 + 6 类 category) (2026-07-19)
 - [x] Pydantic 强化 (Field 高级 / model_dump / Optional / List 理论层) (2026-07-20, Day 5)
-- [ ] **多工具混合调用** —— 当前下一步 (Day 6 主线)
+- [x] **多工具混合调用** (2026-07-21, Day 6 完结, 理解不动代码)
 
 ## Phase 5 —— MCP
 
@@ -82,15 +82,24 @@
 
 ---
 
-## Day 5 → Day 6 衔接 (2026-07-20 更新)
+## Day 5 → Day 6 衔接 (2026-07-21 更新)
 
 **Day 5 完成内容** (全部理论, 未动代码):
 - Field 必填/约束 二分本质
-- model_dump() 是 "对象 —— dict 网关"
+- model_dump() 是 "对象 → dict 网关"
 - Optional + default 是两件事
 - List[X] + None + Field 高级约束理论层
-- **新教学规则**: 原理 —— 字面 —— 代码 —— 输出 —— 预测
+- 新教学规则: 原理 → 字面 → 代码 → 输出 → 预测
 
-**Day 6 主线**:
-- 多工具混合调用 (08_simple_agent 最后 1 件)
-- 会用到 List[str] (如 MultiPrintArgs), 自然补齐 List 实战
+**Day 6 完成内容** (全部验证 + 理论, 未动业务代码):
+- 多工具混合调用机制 (08_simple_agent 最后 1 件完成)
+- 真实运行 read_file → print → read_file → 自然语言答复
+- 验证 messages 长度 = 2 + 2N 规律
+- 验证 re.search 只匹配第一个 [TOOL:...] 限制
+- 能力验收: 画流程图 + 用自己话解释 (L4-L5)
+
+**Day 7+ 主线 (Tutorial 09 准备)**:
+- 复杂工具设计 (嵌套 args)
+- 多工具并行可能性 (OpenAI 标准 tool_calls 字段, 与 re.search 的对比)
+- Pydantic List[str] 实战 (MultiPrintArgs)
+- Q6 待补讲: validate_args 返回 (ok, validated) 元组风格对比

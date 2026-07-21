@@ -1,10 +1,12 @@
 # HANDOFF
 
-## 最近会话: 2026-07-20 (Day 5 完结)
+## 最近会话: 2026-07-21 (Day 6 完结)
 
 ### 主题
 
-**Pydantic 强化收尾** —— 全部讲原理, 不动项目代码. 多工具混合调用推迟到 Day 6.
+**08_simple_agent 收尾** —— 多工具混合调用理论 + 实战 (read_file → print → read_file → 自然语言), 跑通 3 工具连续调用场景. **Tutorial 08 完成**.
+
+**Pydantic 进阶 + 多工具混合调用** —— 不动业务代码, Day 5 是 Pydantic 理论收尾 (Field / model_dump / Optional), Day 6 是多工具机制验证.
 
 ---
 
@@ -86,20 +88,24 @@ ROADMAP.md —— 更新 (Phase 1 Pydantic 标记 [x])
 ## 下次 Session 起点 (Day 6)
 
 ### 主线进度
-08_simple_agent 三件套完成度: 2.5 / 3
+08_simple_agent 三件套完成度: **3 / 3** 完成
 - v 结构化输入 (Pydantic)
 - v 结构化错误 (execute_tool + classify_error)
-- o 多工具混合调用 (剩余, Day 6 主线)
+- v 多工具混合调用 (Day 6 完结, 验证机制不动代码)
 
-### 教学风格新规则 (Day 6 强制执行)
-进入新概念必须按: **原理 —— 字面 —— 真实代码 —— 真实输出 —— 学生预测**.
+### 今日 5 阶段教学节奏 (沿用)
+原理 —— 字面 —— 真实代码 —— 真实输出 —— 学生预测.
 
-绝不可以在第 4 步 (真实输出) 之前让学生预测代码.
+### 今日真实运行 (Day 6)
+Task B: read_file → print → read_file → 自然语言答复
+- 4 次 llm.chat 调用
+- messages 长度变化: 2 → 4 → 6 → 8
+- Round 4 自然语言: 没触发 llm.chat, 直接 return response
 
-### 推荐路径 (Day 6)
-**多工具混合调用** —— 同一轮连续调多个工具, 验证 messages 顺序
-- 多工具调用会用到 `List[str]`, 自然补齐 List 实战
-- 多轮 messages 的 append 顺序语义
+### Day 7+ 推荐主线 (Tutorial 09 预告)
+- 复杂工具设计 (`@dataclass` + 嵌套 args)
+- 多工具并行可能性 (OpenAI 标准 tool_calls 字段, 与 re.search 的对比)
+- Pydantic List[str] 实战 (MultiPrintArgs)
 
 ### 待补到 Day 7+ 单讲
 - Q6 `validate_args` 返回 `(ok, validated)` 元组的设计风格对比
@@ -122,6 +128,7 @@ ROADMAP.md —— 更新 (Phase 1 Pydantic 标记 [x])
 - model_dump() 网关 (Day 5 确认)
 - Optional + default 二分 (Day 5 确认)
 - TOOLS vs TOOL_ARG_MODELS 双字典分工 (Day 5 复习确认)
+- **多工具连续调用机制 (Day 6 确认)**: re.search 只取第一个 TOOL, 下一轮基于上一轮 result 重新决策, messages 长度 = 2 + 2N
 
 如果发现新的理解错误, 针对具体问题补充, 不整体复习.
 
