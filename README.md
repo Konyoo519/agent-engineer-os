@@ -151,10 +151,11 @@ agent-engineer-os/
 ## Tutorial Progress
 
 - Tutorial 08 `08_simple_agent`：已完成
-- Tutorial 09 `09_structured_agent`：Part 1 教学材料已搭建，尚未开始学习
+- Tutorial 09 `09_structured_agent`：Part 1 已完成
   - 已设计结构化 Agent action
   - 已创建 `ToolCall` 与 `AgentAction` 示例代码
-  - 尚未计入学习完成度
+  - 已学习 Why / Principle / Terminology / Real Code / Real Output / Pattern / Prediction / Practice
+  - 学生已明确确认：“本 Part 学习完成。”
 
 ## Teaching Principles
 
@@ -162,11 +163,12 @@ agent-engineer-os/
 
 1. 为什么会有这个知识点（Why）
 2. 工作原理（Principle）
-3. 真实代码（Real Code）
-4. 真实运行结果（Real Output）
-5. 总结规律（Pattern）
-6. 预测新的例子（Prediction）
-7. 练习与应用（Practice）
+3. 字面解释（Terminology）
+4. 真实代码（Real Code）
+5. 真实运行结果（Real Output）
+6. 总结规律（Pattern）
+7. 预测新的例子（Prediction）
+8. 练习与应用（Practice）
 
 严禁在学生第一次接触一个知识点时，就要求预测代码运行结果。
 

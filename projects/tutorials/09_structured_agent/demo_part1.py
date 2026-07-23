@@ -8,7 +8,8 @@ RAW_RESPONSE = """
   "kind": "tool_calls",
   "tool_calls": [
     {"name": "read_file", "arguments": {"path": "tools.py"}},
-    {"name": "print", "arguments": {"text": "读取完成"}}
+    {"name": "print", "arguments": {"text": "读取完成"}},
+    {"name": "list_files", "arguments": {"path": "."}}
   ]
 }
 """

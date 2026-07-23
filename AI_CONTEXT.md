@@ -4,7 +4,7 @@
 > 不是完整历史记录, 也不是唯一事实来源.
 > 完整事实依然分布在: README / ROADMAP / PROJECT_STATE / HANDOFF / docs/knowledge/ / docs/daily/ / projects/
 > 本文件只负责让一个新 AI 对话**只读这一份文件**就能快速恢复当前学习状态.
-最后更新: **2026-07-23 (Day 7 —— Tutorial 09 设计完成, Part 1 教学尚未开始)**
+最后更新: **2026-07-23 (Day 7 —— Tutorial 09 Part 1 已完成)**
 
 ---
 
@@ -23,12 +23,12 @@
   - v 结构化输入 (Pydantic 验证参数 + 嵌套 BaseModel)
   - v 结构化错误 (execute_tool 返回 dict + classify_error 查表)
   - v 多工具混合调用 (Day 6 完结, 理解不动代码)
-- **Tutorial 09 已完成课程设计，尚未开始正式教学**
-  - [ ] Part 1：结构化 Agent action 与多工具调用解析
+- **Tutorial 09 已完成课程设计，Part 1 已完成**
+  - [x] Part 1：结构化 Agent action 与多工具调用解析（2026-07-23 完成）
   - [ ] Part 2：参数模型与嵌套参数验证
   - [ ] Part 3：结构化动作的工具执行
   - [ ] Part 4：多工具调度与结果回传
-  - 说明：Part 1 代码只是教学材料草稿，不代表学生已掌握
+  - 说明：Part 1 已完成 Why / Principle / Terminology / Real Code / Real Output / Pattern / Prediction / Practice，且学生已明确表示“本 Part 学习完成。”
 
 ### 三层错误拦截设计 (Day 4 已完成)
 
@@ -69,7 +69,7 @@ LLM 输出 JSON 字符串 →  json.loads() ← 拦截层 1: JSON 解析错 → 
 - Q6 (Day 7+ 单讲)
 - 错误分类边界 case
 - 多轮错误恢复的 token 成本意识
-- Tutorial 09 Part 1 尚未开始教学、真实学习和独立练习
+- Tutorial 09 Part 1 已完成课堂学习流程、练习和最终确认
 
 ### 学生当前学习最大薄弱点 (2026-07-20 确认)
 
@@ -84,11 +84,11 @@ LLM 输出 JSON 字符串 →  json.loads() ← 拦截层 1: JSON 解析错 → 
 
 ## 3. 下一步 (Day 7 结束)
 
-Tutorial 09 `09_structured_agent` 下一步是正式开始 Part 1 教学。
+Tutorial 09 `09_structured_agent` 下一步是进入 Part 2。
 
-Part 1 教学材料已搭建，但学习完成度仍为 0%。
+Part 1 已完成课堂学习流程与练习。学生已理解 `AgentAction` 用于表示 LLM 这一轮想做什么，`ToolCall` 表示一个具体工具调用，`parse_action()` 负责把 LLM JSON 文本解析为 `AgentAction`。
 
-暂不进入 Part 2，必须先完成 Part 1 的正式教学、练习和能力确认。
+Part 1 已获得学生最终确认。下一次学习可以进入 Part 2：参数模型与嵌套参数验证。
 
 间隔复习 (沿用 Day 4 计划):
 - 3 天后 (2026-07-22) 测 Day 4 + Day 5 内容
@@ -107,7 +107,7 @@ Part 1 教学材料已搭建，但学习完成度仍为 0%。
   - demo_part1.py
   - test_part1.py
 
-- docs/daily/2026-07-23.md — Day 7 Tutorial 09 设计日志（Part 1 尚未教学）
+- docs/daily/2026-07-23.md — Day 7 Tutorial 09 Part 1 完成日志
 - docs/daily/2026-07-19.md — Day 4 完成日志
 - docs/daily/2026-07-20.md —— **Day 5 完成日志** (新)
 

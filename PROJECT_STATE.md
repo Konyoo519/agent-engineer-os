@@ -38,7 +38,7 @@
 - [x] **多轮错误恢复端到端测试 (test_all_errors.py)** — **L4**,2026-07-19
 - [x] **多工具混合调用 (2026-07-21, Day 6 完结, 理解不动代码)**
 - [x] **Tutorial 08 `08_simple_agent` 完成**
-- [ ] **Tutorial 09 Part 1：结构化 Agent action 解析（教学尚未开始）**
+- [x] **Tutorial 09 Part 1：结构化 Agent action 解析（2026-07-23 完成）**
 - [ ] Tutorial 09 Part 2：参数模型与嵌套参数验证
 - [ ] Tutorial 09 Part 3：结构化动作的工具执行
 - [ ] Tutorial 09 Part 4：多工具调度与结果回传
@@ -140,4 +140,4 @@ projects/tutorials/09_structured_agent/
 - demo_part1.py — Part 1 真实示例
 - test_part1.py — Part 1 标准库测试
 
-docs/daily/2026-07-23.md — Day 7 Tutorial 09 设计日志（Part 1 尚未教学）
+docs/daily/2026-07-23.md — Day 7 Tutorial 09 Part 1 完成日志

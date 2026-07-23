@@ -4,9 +4,9 @@
 
 ### 主题
 
-**Tutorial 09 课程设计** —— 从 Tutorial 08 的文本工具协议设计结构化 Agent action 协议. **Tutorial 08 已完成，Tutorial 09 Part 1 尚未开始教学**.
+**Tutorial 09 Part 1 学习** —— 从 Tutorial 08 的文本工具协议设计结构化 Agent action 协议. **Tutorial 08 已完成，Tutorial 09 Part 1 已完成**.
 
-Part 1 的代码只是教学材料草稿，不代表学生已学习或掌握.
+Part 1 已按永久学习进度规则完成，学生已明确表示：“本 Part 学习完成。”
 
 ---
 
@@ -105,11 +105,12 @@ ROADMAP.md —— 更新到 Tutorial 09 Part 1
 
 ### Tutorial 09 当前状态
 - Part 1 教学材料已搭建
-- Part 1 尚未正式教学
-- Part 1 尚未完成练习与能力确认
+- Part 1 已完成 Why / Principle / Terminology / Real Code / Real Output / Pattern / Prediction / Practice
+- 学生已完成一次练习：新增第三个 `ToolCall`，修复 JSON 缺逗号错误，观察 `TOOL CALL COUNT: 3`
+- Part 1 已获得学生明确确认：“本 Part 学习完成。”
 
 ### 正式教学顺序
-- Part 1：Why → Principle → Terminology → Real Code → Real Output → Pattern → Prediction → Practice
+- Part 1：已完成
 - Part 2：参数模型与嵌套参数验证
 - Part 3：结构化动作的工具执行
 - Part 4：多工具调度与结果回传
