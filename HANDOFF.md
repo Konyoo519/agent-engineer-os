@@ -1,12 +1,12 @@
 # HANDOFF
 
-## 最近会话: 2026-07-21 (Day 6 完结)
+## 最近会话: 2026-07-23 (Day 7)
 
 ### 主题
 
-**08_simple_agent 收尾** —— 多工具混合调用理论 + 实战 (read_file → print → read_file → 自然语言), 跑通 3 工具连续调用场景. **Tutorial 08 完成**.
+**Tutorial 09 设计与 Part 1** —— 从 Tutorial 08 的文本工具协议进入结构化 Agent action 协议. **Tutorial 08 已完成，Tutorial 09 Part 1 已完成**.
 
-**Pydantic 进阶 + 多工具混合调用** —— 不动业务代码, Day 5 是 Pydantic 理论收尾 (Field / model_dump / Optional), Day 6 是多工具机制验证.
+Part 1 只解析动作，不执行工具、不接入真实 LLM、不进入并行调度.
 
 ---
 
@@ -66,7 +66,7 @@
 
 ---
 
-## 当前文件状态 (Day 5 完成 —— **没有任何代码改动**)
+## 当前文件状态 (Day 7)
 
 projects/tutorials/08_simple_agent/
 - agent.py —— Agent 循环 + 三层错误拦截 + Pydantic 集成 (未改)
@@ -79,13 +79,15 @@ projects/tutorials/08_simple_agent/
 
 docs/daily/2026-07-20.md —— **Day 5 完成日志** (新)
 docs/daily/2026-07-19.md —— Day 4 完成日志 (未改)
-AI_CONTEXT.md —— 更新到 Day 5
-PROJECT_STATE.md —— **未改** (仍指向 Day 4)
-ROADMAP.md —— 更新 (Phase 1 Pydantic 标记 [x])
+docs/daily/2026-07-23.md —— Day 7 Tutorial 09 Part 1 日志
+projects/tutorials/09_structured_agent/ —— Tutorial 09 Part 1
+AI_CONTEXT.md —— 更新到 Day 7
+PROJECT_STATE.md —— 更新到 Day 7
+ROADMAP.md —— 更新到 Tutorial 09 Part 1
 
 ---
 
-## 下次 Session 起点 (Day 6)
+## 下次 Session 起点 (Day 7 Part 1 练习)
 
 ### 主线进度
 08_simple_agent 三件套完成度: **3 / 3** 完成
@@ -96,18 +98,20 @@ ROADMAP.md —— 更新 (Phase 1 Pydantic 标记 [x])
 ### 今日 5 阶段教学节奏 (沿用)
 原理 —— 字面 —— 真实代码 —— 真实输出 —— 学生预测.
 
-### 今日真实运行 (Day 6)
-Task B: read_file → print → read_file → 自然语言答复
-- 4 次 llm.chat 调用
-- messages 长度变化: 2 → 4 → 6 → 8
-- Round 4 自然语言: 没触发 llm.chat, 直接 return response
+### 今日真实运行 (Day 7 Part 1)
+- JSON action 响应解析为 `AgentAction`
+- 一个响应解析出 2 个 `ToolCall`
+- 解析阶段不执行任何工具
 
-### Day 7+ 推荐主线 (Tutorial 09 预告)
+### Tutorial 09 Part 1 已完成
+- `ToolCall`：一个待执行工具调用的数据对象
+- `AgentAction`：工具调用响应 / 最终回答的统一动作对象
+- `parse_action()`：JSON 文本 → 结构化动作
+- 一个响应可以解析出多个 `ToolCall`
+
+### 后续待讲
 - 复杂工具设计 (`@dataclass` + 嵌套 args)
-- 多工具并行可能性 (OpenAI 标准 tool_calls 字段, 与 re.search 的对比)
 - Pydantic List[str] 实战 (MultiPrintArgs)
-
-### 待补到 Day 7+ 单讲
 - Q6 `validate_args` 返回 `(ok, validated)` 元组的设计风格对比
 - 错误分类边界 case (PermissionError / IsADirectoryError / UnicodeDecodeError)
 

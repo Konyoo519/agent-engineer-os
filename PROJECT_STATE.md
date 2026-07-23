@@ -5,9 +5,9 @@
 - Project Name: Agent Engineer OS
 - Goal: Become a qualified AI Agent Engineer within 120 days.
 - Repository Status: Active Development
-- Current Sprint: Sprint 4 (Agent) — tutorial 08_simple_agent
-- Current Day: **Day 6** (2026-07-21)
-- **当前日期: 2026-07-21**
+- Current Sprint: Sprint 4 (Agent) — tutorial 09_structured_agent
+- Current Day: **Day 7** (2026-07-23)
+- **当前日期: 2026-07-23**
 
 ## Current Progress
 
@@ -37,6 +37,11 @@
 - [x] **错误处理与重试 (三层拦截)** — **L4**,2026-07-19
 - [x] **多轮错误恢复端到端测试 (test_all_errors.py)** — **L4**,2026-07-19
 - [x] **多工具混合调用 (2026-07-21, Day 6 完结, 理解不动代码)**
+- [x] **Tutorial 08 `08_simple_agent` 完成**
+- [x] **Tutorial 09 Part 1：结构化 Agent action 解析 (2026-07-23)**
+- [ ] Tutorial 09 Part 2：参数模型与嵌套参数验证
+- [ ] Tutorial 09 Part 3：结构化动作的工具执行
+- [ ] Tutorial 09 Part 4：多工具调度与结果回传
 
 **晚间综合复习新增 (Day 2 晚)**
 - [x] Debug 完整 4 步流程 验证通过 (2026-07-15 晚)
@@ -115,7 +120,7 @@
 2. BaseModel 实例的 type()（已通过 Q&A 解决）
 3. **Q6 待补**：`validate_args` 返回元组 (ok, validated) 的设计 — 涉及「返回值表达 vs 异常表达」风格对比 — 下次单讲
 
-## Active File List (Day 4)
+## Active File List (Day 7)
 
 projects/tutorials/08_simple_agent/
 - agent.py — Agent 循环 + 三层错误拦截 + Pydantic 集成
@@ -128,3 +133,11 @@ projects/tutorials/08_simple_agent/
 
 docs/daily/2026-07-19.md — Day 4 完整日志 (新)
 docs/daily/2026-07-18.md — Day 3 复习
+
+projects/tutorials/09_structured_agent/
+- README.md — Tutorial 09 设计与边界
+- part1_protocol.py — Part 1 结构化动作协议
+- demo_part1.py — Part 1 真实示例
+- test_part1.py — Part 1 标准库测试
+
+docs/daily/2026-07-23.md — Day 7 Tutorial 09 Part 1

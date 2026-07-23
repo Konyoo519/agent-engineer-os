@@ -55,7 +55,7 @@
 
 ## Phase 4 —— Agent (当前主线)
 
-当前项目: projects/tutorials/08_simple_agent
+当前项目: projects/tutorials/09_structured_agent
 
 进度:
 
@@ -67,6 +67,11 @@
 - [x] 错误处理与重试 (三层拦截 + 6 类 category) (2026-07-19)
 - [x] Pydantic 强化 (Field 高级 / model_dump / Optional / List 理论层) (2026-07-20, Day 5)
 - [x] **多工具混合调用** (2026-07-21, Day 6 完结, 理解不动代码)
+- [x] Tutorial 08 `08_simple_agent` 完成
+- [x] Tutorial 09 Part 1：结构化 Agent action 与多工具调用解析 (2026-07-23)
+- [ ] Tutorial 09 Part 2：参数模型与嵌套参数验证
+- [ ] Tutorial 09 Part 3：结构化动作的工具执行
+- [ ] Tutorial 09 Part 4：多工具调度与结果回传
 
 ## Phase 5 —— MCP
 
@@ -79,6 +84,25 @@
 ## Phase 7 —— Production
 
 待主线推进.
+
+---
+
+## Day 7：Tutorial 09 Part 1 (2026-07-23)
+
+### 为什么需要 Tutorial 09
+
+Tutorial 08 使用普通文本承载 `[TOOL:工具名:JSON 参数]`。这种方式能完成基础调用，但工具调用协议、最终回答和参数都混在文本中，且 `re.search()` 每轮只取第一个工具调用。
+
+### Part 1 完成内容
+
+- 使用 `ToolCall` 表示一个待执行工具动作
+- 使用 `AgentAction` 区分工具调用响应和最终回答
+- 将一个 JSON 响应解析为多个 `ToolCall`
+- 保持“解析动作”和“执行工具”两个职责分离
+
+### 当前完成边界
+
+Part 1 只完成结构化动作解析，不执行工具、不接入真实 LLM、不进入并行调度。
 
 ---
 

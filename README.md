@@ -148,6 +148,15 @@ agent-engineer-os/
 
 ---
 
+## Tutorial Progress
+
+- Tutorial 08 `08_simple_agent`：已完成
+- Tutorial 09 `09_structured_agent`：Part 1 已完成
+  - 结构化 Agent action
+  - `ToolCall` 与 `AgentAction` 数据模型
+  - 一个响应解析出多个工具调用
+  - 解析与执行职责分离
+
 ## Teaching Principles
 
 对于第一次接触的新知识，教学必须遵循以下顺序：

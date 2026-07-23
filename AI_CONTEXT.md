@@ -4,7 +4,7 @@
 > 不是完整历史记录, 也不是唯一事实来源.
 > 完整事实依然分布在: README / ROADMAP / PROJECT_STATE / HANDOFF / docs/knowledge/ / docs/daily/ / projects/
 > 本文件只负责让一个新 AI 对话**只读这一份文件**就能快速恢复当前学习状态.
-最后更新: **2026-07-21 (Day 6 完结 —— 08_simple_agent 收尾, 多工具混合调用理论+实战, 不动代码)**
+最后更新: **2026-07-23 (Day 7 —— Tutorial 09 Part 1 完成, 结构化 Agent action 解析)**
 
 ---
 
@@ -13,8 +13,8 @@
 - 项目名称: **Agent Engineer OS**
 - 项目目标: 120 天内成为合格的 AI Agent Engineer
 - 仓库状态: Active Development
-- 当前 Sprint: Sprint 4 (Agent) —— tutorial 08_simple_agent
-- 当前 Day: **Day 6**
+- 当前 Sprint: Sprint 4 (Agent) —— tutorial 09_structured_agent
+- 当前 Day: **Day 7**
 
 ## 2. 当前状态快照
 
@@ -23,6 +23,11 @@
   - v 结构化输入 (Pydantic 验证参数 + 嵌套 BaseModel)
   - v 结构化错误 (execute_tool 返回 dict + classify_error 查表)
   - v 多工具混合调用 (Day 6 完结, 理解不动代码)
+- **Tutorial 09 Part 1 完成**
+  - v `ToolCall` / `AgentAction` 结构化动作表示
+  - v 一个 JSON 响应解析出多个工具调用
+  - v 解析动作与执行工具职责分离
+  - [ ] 参数模型、工具执行、调度与结果回传
 
 ### 三层错误拦截设计 (Day 4 已完成)
 
@@ -63,6 +68,7 @@ LLM 输出 JSON 字符串 →  json.loads() ← 拦截层 1: JSON 解析错 → 
 - Q6 (Day 7+ 单讲)
 - 错误分类边界 case
 - 多轮错误恢复的 token 成本意识
+- Tutorial 09 的结构化动作协议尚未通过独立练习验证
 
 ### 学生当前学习最大薄弱点 (2026-07-20 确认)
 
@@ -75,29 +81,32 @@ LLM 输出 JSON 字符串 →  json.loads() ← 拦截层 1: JSON 解析错 → 
 **Day 5 引入的新教学规则** (Day 7 已扩展为永久规则, 强制执行):
 > 进入新概念必须按 "原理 —— 字面 —— 真实代码 —— 真实输出 —— 总结规律 —— 预测 —— 练习" 节奏, 不可以在真实输出前让学生预测.
 
-## 3. 下一步 (基于 Day 5)
+## 3. 下一步 (Day 7 结束)
 
-08_simple_agent 主线还差最后 1 件: **多工具混合调用**.
+Tutorial 09 `09_structured_agent` 下一步是 Part 2：参数模型与嵌套参数验证。
 
-候选路径 (Day 6):
-- **A. 多工具混合调用** —— 同一轮连续调 print + read_file, 验证 messages 顺序
-- **B. 进入 09 项目**
-- **C. 复习日**
+当前 Part 1 已完成：结构化动作协议与多工具调用解析。
 
-推荐 **A → (Day 7+) 复习 + Q6 待补**.
+暂不进入 Part 2，先完成 Part 1 练习并确认能解释数据流。
 
 间隔复习 (沿用 Day 4 计划):
 - 3 天后 (2026-07-22) 测 Day 4 + Day 5 内容
 
 ---
 
-## 当前活跃文件 (2026-07-20)
+## 当前活跃文件 (2026-07-23)
 
 - projects/tutorials/08_simple_agent/ (Day 5 未动)
   - agent.py / tools.py / llm.py / config.py / run_agent.py
   - test_all_errors.py (Day 4 新建)
   - bug_test.py / json_test.py / tools_v2.py (Day 2 训练场)
+- projects/tutorials/09_structured_agent/
+  - README.md
+  - part1_protocol.py
+  - demo_part1.py
+  - test_part1.py
 
+- docs/daily/2026-07-23.md — Day 7 Tutorial 09 Part 1 日志
 - docs/daily/2026-07-19.md — Day 4 完成日志
 - docs/daily/2026-07-20.md —— **Day 5 完成日志** (新)
 
