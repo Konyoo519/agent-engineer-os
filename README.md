@@ -148,6 +148,30 @@ agent-engineer-os/
 
 ---
 
+## Teaching Principles
+
+对于第一次接触的新知识，教学必须遵循以下顺序：
+
+1. 为什么会有这个知识点（Why）
+2. 工作原理（Principle）
+3. 真实代码（Real Code）
+4. 真实运行结果（Real Output）
+5. 总结规律（Pattern）
+6. 预测新的例子（Prediction）
+7. 练习与应用（Practice）
+
+严禁在学生第一次接触一个知识点时，就要求预测代码运行结果。
+
+预测必须建立在以下基础之上：
+
+- 已理解工作原理
+- 已阅读真实代码
+- 已见过真实运行结果
+
+目标是培养推理（Reasoning）能力，而不是猜测（Guessing）。
+
+---
+
 # 🤖 AI Collaboration
 
 本项目采用多 AI 协作模式：
