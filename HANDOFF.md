@@ -4,9 +4,9 @@
 
 ### 主题
 
-**Tutorial 09 设计与 Part 1** —— 从 Tutorial 08 的文本工具协议进入结构化 Agent action 协议. **Tutorial 08 已完成，Tutorial 09 Part 1 已完成**.
+**Tutorial 09 课程设计** —— 从 Tutorial 08 的文本工具协议设计结构化 Agent action 协议. **Tutorial 08 已完成，Tutorial 09 Part 1 尚未开始教学**.
 
-Part 1 只解析动作，不执行工具、不接入真实 LLM、不进入并行调度.
+Part 1 的代码只是教学材料草稿，不代表学生已学习或掌握.
 
 ---
 
@@ -98,18 +98,21 @@ ROADMAP.md —— 更新到 Tutorial 09 Part 1
 ### 今日 5 阶段教学节奏 (沿用)
 原理 —— 字面 —— 真实代码 —— 真实输出 —— 学生预测.
 
-### 今日真实运行 (Day 7 Part 1)
+### 今日代码草稿验证 (不计入学习完成)
 - JSON action 响应解析为 `AgentAction`
 - 一个响应解析出 2 个 `ToolCall`
 - 解析阶段不执行任何工具
 
-### Tutorial 09 Part 1 已完成
-- `ToolCall`：一个待执行工具调用的数据对象
-- `AgentAction`：工具调用响应 / 最终回答的统一动作对象
-- `parse_action()`：JSON 文本 → 结构化动作
-- 一个响应可以解析出多个 `ToolCall`
+### Tutorial 09 当前状态
+- Part 1 教学材料已搭建
+- Part 1 尚未正式教学
+- Part 1 尚未完成练习与能力确认
 
-### 后续待讲
+### 正式教学顺序
+- Part 1：Why → Principle → Terminology → Real Code → Real Output → Pattern → Prediction → Practice
+- Part 2：参数模型与嵌套参数验证
+- Part 3：结构化动作的工具执行
+- Part 4：多工具调度与结果回传
 - 复杂工具设计 (`@dataclass` + 嵌套 args)
 - Pydantic List[str] 实战 (MultiPrintArgs)
 - Q6 `validate_args` 返回 `(ok, validated)` 元组的设计风格对比
